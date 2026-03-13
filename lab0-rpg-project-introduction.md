@@ -195,7 +195,61 @@ Compare the two data access styles used in SAMCO:
 
 ---
 
-## Step 4: Ask Bob to Summarise What You've Learned (4 minutes)
+## Step 4: Generate Architecture Documentation
+
+### 4a — Comprehensive Architecture Overview
+
+**Prompt for Bob:**
+```
+@SAMCO/QPNLSRC/SAMMNU-Main_menu_application_SAMPLE.MENUSRC
+@SAMCO/QDDSSRC/ARTICLE-Article_File.PF
+@SAMCO/QDDSSRC/CUSTOMER.PF
+@SAMCO/QDDSSRC/ORDER.PF
+
+Generate a comprehensive architecture overview document covering:
+1. Database schema with all tables, fields, and relationships
+2. Application structure (UI layer, business logic, data access)
+3. Main business functions and workflows
+4. Technical architecture and integration points
+
+Save the documentation to a temporary directory as a markdown file.
+```
+
+**What to Look For:**
+- Bob generates a detailed architecture document with complete table definitions
+- Documentation includes field descriptions, data types, and business rules
+- Application layers are clearly explained (presentation, business logic, data access)
+- Key business processes are documented (order fulfillment, inventory management)
+- Technical stack and integration points are identified
+
+---
+
+### 4b — Visual Architecture Diagrams
+
+**Prompt for Bob:**
+```
+Generate visual architecture diagrams in Mermaid format showing:
+1. Entity Relationship Diagram (ERD) with all database tables
+2. Application layer architecture from UI to database
+3. Business process flows (order processing workflow)
+4. Data flow diagrams (inventory management cycle)
+5. System integration architecture
+6. Menu structure hierarchy
+7. Technology stack overview
+
+Create these diagrams in a separate markdown file in the temporary directory.
+```
+
+**What to Look For:**
+- Bob creates comprehensive Mermaid diagrams covering multiple architectural views
+- ERD shows all tables with primary keys, foreign keys, and relationships
+- Layer architecture diagram illustrates the complete application stack
+- Process flow diagrams include decision points and data transformations
+- Diagrams are properly formatted and can be rendered in Markdown viewers
+
+---
+
+## Step 5: Ask Bob to Summarise What You've Learned (4 minutes)
 
 **Prompt for Bob:**
 ```
@@ -222,6 +276,8 @@ You've successfully completed this lab when:
 - [ ] You understand the six steps of the panel-step state machine
 - [ ] You can trace the complete flow of creating a customer order
 - [ ] You understand the difference between RLA and SQL data access
+- [ ] Bob generated comprehensive architecture documentation
+- [ ] Bob created visual Mermaid diagrams for the application architecture
 
 ---
 
