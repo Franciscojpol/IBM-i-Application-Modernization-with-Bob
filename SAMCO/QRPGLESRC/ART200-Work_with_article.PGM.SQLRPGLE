@@ -48,6 +48,7 @@
      d NewId           s              6  0
      d User            s             10    inz(*user)
      d count           s              3i 0
+    d eofArt2         s               n
      d mode            s              3
 
      d crt             c                   'CRT'
@@ -105,14 +106,75 @@
          RRb01 = RRn01 + 1;
          opt01 = 0;
          count = 0;
-         read article2;
-         dow not %eof(article2) and count < 14;
+
+         exec sql
+           declare cArt2 cursor for
+           select arid,
+                  ardesc,
+                  arsalepr,
+                  arwhspr,
+                  artifa,
+                  arstock,
+                  arminqty,
+                  arcusqty,
+                  arpurqty,
+                  arvatcd,
+                  arcrea,
+                  armod,
+                  armodid,
+                  ardel
+             from article
+            where (ardesc > :savdesc)
+               or (ardesc = :savdesc and arid >= :savid)
+            order by ardesc,
+                     arid;
+
+         exec sql open cArt2;
+         exec sql
+           fetch cArt2 into
+             :arid,
+             :ardesc,
+             :arsalepr,
+             :arwhspr,
+             :artifa,
+             :arstock,
+             :arminqty,
+             :arcusqty,
+             :arpurqty,
+             :arvatcd,
+             :arcrea,
+             :armod,
+             :armodid,
+             :ardel;
+
+         dow sqlcod = 0 and count < 14;
            RRN01 += 1;
            count += 1;
            write sfl01;
-           read article2;
+
+           exec sql
+             fetch cArt2 into
+               :arid,
+               :ardesc,
+               :arsalepr,
+               :arwhspr,
+               :artifa,
+               :arstock,
+               :arminqty,
+               :arcusqty,
+               :arpurqty,
+               :arvatcd,
+               :arcrea,
+               :armod,
+               :armodid,
+               :ardel;
          enddo;
-         sflend = %eof(article1);
+
+               eofArt2 = (sqlcod = 100);
+
+         exec sql close cArt2;
+
+               sflend = eofArt2;
          step01 = dsp;
          exsr s01sav;
        endsr;
@@ -254,7 +316,14 @@
            exec sql
              select a.arid,
                     a.ardesc,
+              a.arsalepr,
+              a.arwhspr,
                     a.artifa,
+              a.arstock,
+              a.arminqty,
+              a.arcusqty,
+              a.arpurqty,
+              a.arvatcd,
                     a.armod,
                     a.armodid,
                     a.ardel,
@@ -262,7 +331,14 @@
                     coalesce(f.fadesc, '')
                into :arid,
                     :ardesc,
+              :arsalepr,
+              :arwhspr,
                     :artifa,
+              :arstock,
+              :arminqty,
+              :arcusqty,
+              :arpurqty,
+              :arvatcd,
                     :armod,
                     :armodid,
                     :ardel,
@@ -322,14 +398,89 @@
          armod = %timestamp();
          armodid = user;
          if mode = upd;
-           update farti;
+           exec sql
+             update article
+                set ardesc = :ardesc,
+                    arsalepr = :arsalepr,
+                    arwhspr = :arwhspr,
+                    artifa = :artifa,
+                    arstock = :arstock,
+                    arminqty = :arminqty,
+                    arcusqty = :arcusqty,
+                    arpurqty = :arpurqty,
+                    arvatcd = :arvatcd,
+                    armod = :armod,
+                    armodid = :armodid,
+                    ardel = :ardel
+              where arid = :arid;
          else;
            arcrea = %date();
-           write(e) farti;
-           dow %error;
+           exec sql
+             insert into article
+               (arid,
+                ardesc,
+                arsalepr,
+                arwhspr,
+                artifa,
+                arstock,
+                arminqty,
+                arcusqty,
+                arpurqty,
+                arvatcd,
+                arcrea,
+                armod,
+                armodid,
+                ardel)
+             values
+               (:arid,
+                :ardesc,
+                :arsalepr,
+                :arwhspr,
+                :artifa,
+                :arstock,
+                :arminqty,
+                :arcusqty,
+                :arpurqty,
+                :arvatcd,
+                :arcrea,
+                :armod,
+                :armodid,
+                :ardel);
+
+           dow sqlcod = -803;
              Newid += 1;
              arid = %editc(NewId:'X');
-             write(e) farti;
+             exec sql
+               insert into article
+                 (arid,
+                  ardesc,
+                  arsalepr,
+                  arwhspr,
+                  artifa,
+                  arstock,
+                  arminqty,
+                  arcusqty,
+                  arpurqty,
+                  arvatcd,
+                  arcrea,
+                  armod,
+                  armodid,
+                  ardel)
+               values
+                 (:arid,
+                  :ardesc,
+                  :arsalepr,
+                  :arwhspr,
+                  :artifa,
+                  :arstock,
+                  :arminqty,
+                  :arcusqty,
+                  :arpurqty,
+                  :arvatcd,
+                  :arcrea,
+                  :armod,
+                  :armodid,
+                  :ardel);
            enddo;
            savdesc = ardesc;
            savId = arid;
