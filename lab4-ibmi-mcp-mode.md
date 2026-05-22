@@ -1,41 +1,41 @@
-# Lab 101-4: Modos IBM i, IBM i MCP y Bob Shell - Lab practico de 15 minutos
+# Lab 101-4: Modos IBM i, IBM i MCP y Bob Shell - Laboratorio practico de 15 minutos
 
 **Duracion**: 15 minutos  
 **Nivel**: Intermedio  
 **Prerrequisitos**: 
-- IBM Bob installed and running
-- Access to an IBM i system with Mapepire server running (port 8076)
-- Basic familiarity with command line
+- IBM Bob instalado y en ejecucion
+- Acceso a un sistema IBM i con el servidor Mapepire en ejecucion (puerto 8076)
+- Conocimientos basicos de linea de comandos
 **Version:** version 2 actualizada el 1 de abril de 2026
 
 ## Resumen del lab
 
-In this hands-on lab, you'll configure IBM Bob to work with IBM i systems using the Model Context Protocol (MCP). You'll set up custom modes, connect to your IBM i system, and execute your first queries using Bob's AI-powered interface. 
+En este laboratorio practico, configurarás IBM Bob para trabajar con sistemas IBM i mediante Model Context Protocol (MCP). Configurarás modos personalizados, te conectarás a tu sistema IBM i y ejecutarás tus primeras consultas con la interfaz de IA de Bob.
 
-The *IBM Bob premium package for IBM i* available at GA will bring standard IBM i modes and tools that will differ from the ones used in this tutorial. 
+El *IBM Bob premium package for IBM i* disponible en GA incluirá modos y herramientas estandar de IBM i que pueden diferir de los usados en este tutorial.
 
 ## Que aprenderas
 
-- How to configure Bob for IBM i development with MCP and modes
-- How to use IBM i-specific AI agent modes
-- How to query IBM i systems using natural language
-- How to leverage pre-built IBM i tools
+- Como configurar Bob para desarrollo IBM i con MCP y modos
+- Como usar modos de agente de IA especificos para IBM i
+- Como consultar sistemas IBM i usando lenguaje natural
+- Como aprovechar herramientas IBM i ya preparadas
 
 ## Prerrequisitos (15 minutos)
 
-An IBM i VM is necessary for this lab, with 8076 port open for Mapepire server (use tunneling if using Power Virtual Server/TechZone). You'll find hereunder a few options to get an IBM i virtual machine, and instructions to start the Mapepire server on IBM i that is requried for this lab.
+Este laboratorio requiere una maquina virtual IBM i, con el puerto 8076 abierto para el servidor Mapepire (usa tunel si trabajas con Power Virtual Server/TechZone). Aqui tienes opciones para obtener una VM IBM i e instrucciones para arrancar el servidor Mapepire en IBM i, necesario para este lab.
 
-### How to get an IBM i virtul machine (aka LPAR)? 
+### Como obtener una maquina virtual IBM i (LPAR)
 
-* For customer activities: 
-    * use customer infrastructure (IBM on prem or in the Cloud)
-    * TechZone: request an [IBM i on IBM Cloud Power Virtual Server](https://techzone.ibm.com/collection/628be988043b54001f89111f) with ssh tunneling (see instructions [here](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-connect-ibmi#ssh-tunneling) for opening ports if using a public IP. Note that no 'production' customer data is allowed when using our own IBM accounts. Please refer to the official guidelines.
-    * TechZone: request a custom techZone environment for complex or more permanent showcase (prefered but not the default). 
-* For IBMers/business partners activities:
-    * TechZone: request a ["On-Premises IBM Power AIX, IBM i and Linux Base Images"](https://techzone.ibm.com/collection/6261d3584670d7001e3d483a) environment, for example IBM i 7.5 on Power10. IBMers must connect through the Internal intranet and Business partners must connect through a provided VPN.
-    * TechZone: request a [IBM i on IBM Cloud Power Virtual Server](https://techzone.ibm.com/collection/628be988043b54001f89111f) as listed above.
+* Para actividades con clientes:
+    * usar infraestructura del cliente (IBM on-prem o en la nube)
+    * TechZone: solicitar un entorno [IBM i on IBM Cloud Power Virtual Server](https://techzone.ibm.com/collection/628be988043b54001f89111f) con tunel SSH (instrucciones [aqui](https://cloud.ibm.com/docs/power-iaas?topic=power-iaas-connect-ibmi#ssh-tunneling) para apertura de puertos con IP publica). Nota: no se permite usar datos de cliente en produccion con cuentas IBM internas; revisar las guias oficiales.
+    * TechZone: solicitar un entorno TechZone personalizado para demos complejas o de mayor duracion (preferido, pero no predeterminado).
+* Para actividades de IBMers y business partners:
+    * TechZone: solicitar el entorno ["On-Premises IBM Power AIX, IBM i and Linux Base Images"](https://techzone.ibm.com/collection/6261d3584670d7001e3d483a), por ejemplo IBM i 7.5 en Power10. IBMers deben conectarse por intranet interna y business partners por VPN.
+    * TechZone: solicitar [IBM i on IBM Cloud Power Virtual Server](https://techzone.ibm.com/collection/628be988043b54001f89111f) como se indico arriba.
 
-### How to start the mapepire service on IBM i used by MCP ? 
+### Como iniciar el servicio Mapepire en IBM i usado por MCP
 
 Follow these [instructions](https://ibm-d95bab6e.mintlify.app/setup-mapepire#option-1-rpm-installation-recommended) and don't be scared.
 In a nutshell: 
