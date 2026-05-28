@@ -48,7 +48,6 @@
      d NewId           s              6  0
      d User            s             10    inz(*user)
      d count           s              3i 0
-    d eofArt2         s               n
      d mode            s              3
 
      d crt             c                   'CRT'
@@ -170,11 +169,9 @@
                :ardel;
          enddo;
 
-               eofArt2 = (sqlcod = 100);
-
          exec sql close cArt2;
 
-               sflend = eofArt2;
+         sflend = (sqlcod = 100);
          step01 = dsp;
          exsr s01sav;
        endsr;
@@ -316,14 +313,7 @@
            exec sql
              select a.arid,
                     a.ardesc,
-              a.arsalepr,
-              a.arwhspr,
                     a.artifa,
-              a.arstock,
-              a.arminqty,
-              a.arcusqty,
-              a.arpurqty,
-              a.arvatcd,
                     a.armod,
                     a.armodid,
                     a.ardel,
@@ -331,14 +321,7 @@
                     coalesce(f.fadesc, '')
                into :arid,
                     :ardesc,
-              :arsalepr,
-              :arwhspr,
                     :artifa,
-              :arstock,
-              :arminqty,
-              :arcusqty,
-              :arpurqty,
-              :arvatcd,
                     :armod,
                     :armodid,
                     :ardel,

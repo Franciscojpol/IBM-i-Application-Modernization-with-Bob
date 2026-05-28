@@ -2,17 +2,19 @@
 
 This directory contains configuration for using Bob (the MCP-powered tool builder) to create and manage IBM i SQL tools.
 
+## Change Note (Lab 4)
+
+- Lab: Lab 4 - IBM i MCP mode
+- Date: 2026-05-21
+- Change: This README was updated to align setup guidance with the current repository state, using the existing `.bob/mcp.json` as the starting point.
+
 ## Quick Start
 
 ### 1. Create MCP Configuration File
 
-Copy the example configuration and customize it:
+Use the existing `.bob/mcp.json` in this repository as your starting point, then customize it for your IBM i environment.
 
-```bash
-cp .bob/mcp.json.example .bob/mcp.json
-```
-
-Or create a file named `mcp.json` in this `.bob/` directory with the following structure:
+If you need to recreate it, use the following structure:
 
 ```json
 {
@@ -24,7 +26,7 @@ Or create a file named `mcp.json` in this `.bob/` directory with the following s
       ],
       "cwd": "${workspaceFolder}",
       "env": {
-        "TOOLS_YAML_PATH": ".bob/tools/services-tools.yaml",
+        "TOOLS_YAML_PATH": ".bob/tools/samco-tools.yaml",
         "NODE_OPTIONS": "--no-deprecation",
         "DB2i_HOST": "${DB2i_HOST}",
         "DB2i_USER": "${DB2i_USER}",
@@ -95,7 +97,7 @@ The `mcp.json` includes two MCP servers:
 
 1. **`ibmi-mcp-server`**: Your local development server
    - Executes SQL queries against your IBM i system
-   - Loads tools from `TOOLS_YAML_PATH` (default: `.bob/tools/services-tools.yaml`)
+  - Loads tools from `TOOLS_YAML_PATH` (default: `.bob/tools/samco-tools.yaml`)
    - Uses `npx ibmi-mcp-server` to run the server
    - Set `"disabled": false` to enable (or `true` to disable)
 
@@ -125,13 +127,12 @@ Bob will generate the YAML, validate it, and can test it against your connected 
 ```
 .bob/
 ├── README.md                    # This file - setup instructions
-├── mcp.json.example             # Template configuration (committed)
-├── mcp.json                     # Your actual configuration (not committed)
+├── mcp.json                     # MCP configuration
 └── tools/                       # Your custom tool definitions (not committed)
-    └── services-tools.yaml      # Example: Service-related tools (referenced in mcp.json)
+  └── samco-tools.yaml         # Main tool set used by this lab setup
 ```
 
-**Note**: The `TOOLS_YAML_PATH` in `mcp.json` points to `.bob/tools/services-tools.yaml` which comes predefined with tools for helping Bob create more tools.
+**Note**: The `TOOLS_YAML_PATH` in `mcp.json` points to `.bob/tools/samco-tools.yaml` in this repository setup.
 
 ## Validation
 
