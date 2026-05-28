@@ -147,6 +147,35 @@ Edit `.bob/mcp.json` to use the `.env` file (remove credential references in any
 
 **✅ Success Criteria**: Bob returns formatted system performance data from your IBM i system.
 
+### Optional SQL fallback for Exercise 2 (advanced)
+
+If your active MCP toolset is minimal and does not expose a dedicated `system_status` tool, you can run equivalent checks using QSYS2 services.
+
+```sql
+-- Core status snapshot: active jobs, CPU, and memory indicators
+SELECT
+    ACTIVE_JOBS_IN_SYSTEM,
+    AVERAGE_CPU_UTILIZATION,
+    MAIN_STORAGE_SIZE,
+    CURRENT_TEMPORARY_STORAGE
+FROM QSYS2.SYSTEM_STATUS_INFO;
+```
+
+```sql
+-- Active jobs overview (top consumers)
+SELECT
+    JOB_NAME,
+    JOB_USER,
+    SUBSYSTEM,
+    CPU_TIME,
+    TOTAL_DISK_IO_COUNT
+FROM TABLE(QSYS2.ACTIVE_JOB_INFO())
+ORDER BY CPU_TIME DESC
+FETCH FIRST 10 ROWS ONLY;
+```
+
+This fallback still satisfies the exercise objective by returning live system state from IBM i.
+
 ## Ejercicio 3: explorar objetos de base de datos (3 minutos)
 
 **Objective**: Use Bob to explore your IBM i database.
@@ -337,13 +366,13 @@ Common Bob CLI options:
 
 ## Lab Completion Checklist
 
-- [ ] Bob is configured with IBM i custom modes
-- [ ] MCP servers are connected and working
-- [ ] Successfully switched to IBM i Agent mode
-- [ ] Retrieved system status information
-- [ ] Explored IBM i services and database objects
-- [ ] (Optional) Ran security analysis queries
-- [ ] Used Bob CLI from the command line
+- [x] Bob is configured with IBM i custom modes
+- [x] MCP servers are connected and working
+- [x] Successfully switched to IBM i Agent mode
+- [x] Retrieved system status information
+- [x] Explored IBM i services and database objects
+- [x] (Optional) Ran security analysis queries
+- [ ] Used Bob CLI from the command line (deferred)
 
 ## What You've Accomplished
 
@@ -390,6 +419,12 @@ Switch to IBM i MCP Tool Builder mode:
 - Verify your IBM i user has appropriate authorities
 - Check Mapepire server logs on IBM i
 - Ensure QSYS2 services are available on your system
+
+### Bob CLI package not found (npm 404)
+- Symptom: `npm install -g @ibm/ibmi-bob` returns 404 (package not found or no access)
+- Verify npm registry: `npm config get registry` (expected: `https://registry.npmjs.org/`)
+- If registry is correct and 404 persists, treat Lab 4 Exercise 5 as deferred for this environment
+- Continue using VS Code Copilot + MCP for all Lab 4 validation steps
 
 ### No data returned
 - Confirm you're querying existing objects/schemas

@@ -41,9 +41,8 @@ function loadDotEnv(dotEnvPath) {
       value = value.slice(1, -1);
     }
 
-    if (!process.env[key]) {
-      process.env[key] = value;
-    }
+    // Prioritize .env values so refreshed credentials are not shadowed by stale process env vars.
+    process.env[key] = value;
   }
 }
 
