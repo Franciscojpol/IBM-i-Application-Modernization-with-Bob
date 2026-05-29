@@ -1,18 +1,10 @@
 .env
-.env.backup-*
+.env copy
 .bob/mcp.json
-.vscode/mcp.json
-../.mcp.json
 .DS_Store
-node_modules/
-.tmp/
-.bob/logs/
-.bob/backup-lab4-*/
-lab100-premium-package-introduction.md
-lab101-premium-devops-buildsamco.md
-lab102-premium-developer-compile.md
-lab103-premium-modernization-dds-to-sql.md
-lab104-premium-impact-analysis.md
-lab105-premium-database-engineer.md
-lab106-premium-test-rpgunit.md
-lab107-premium-knowledge-assistant.md
+
+article-list-app/node_modules/
+article-api-server/node_modules/
+
+ansible/reports/
+ansible/inventories/development/group_vars/ibmi_systems/vault.yml
